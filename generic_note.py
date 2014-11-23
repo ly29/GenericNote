@@ -286,17 +286,21 @@ def register_menus():
         nodeitems_builtins.compositor_node_categories,
         nodeitems_builtins.texture_node_categories,
     ]
-    for i, node_cats in enumerate(menus):
-        for j, node_cat in enumerate(node_cats):
+    for menu in menus:
+        for index, node_cat in enumerate(menu):
             if node_cat.identifier in menu_categories:
                 new_menu = menu_categories[node_cat.identifier]
-                menus[i][j] = new_menu
+                menu[index] = new_menu
 
     nodeitems_builtins.register()
 
 
 def unregister_menus():
-    nodeitems_builtins.unregister()
+    #  if this fails menus aren't loaded. this ensure that they can load
+    try:
+        nodeitems_builtins.unregister()
+    except:
+        pass
     #  reload the code dumps all changes
     importlib.reload(nodeitems_builtins)
     nodeitems_builtins.register()
@@ -304,12 +308,9 @@ def unregister_menus():
 
 def register():
     bpy.utils.register_module(__name__)
-    try:  # won't work from text editor
-        pref = bpy.context.user_preferences.addons[__name__].preferences
-        if pref.register_menus:
-            register_menus()
-    except:
-        pass
+    pref = bpy.context.user_preferences.addons[__name__].preferences
+    if pref.register_menus:
+        register_menus()
 
 
 def unregister():
