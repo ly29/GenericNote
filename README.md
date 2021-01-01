@@ -1,6 +1,9 @@
 GenericNote
 ===========
 
+Out of date. 
+
+
 A generic note addon for blender
 For documentation see here: http://wiki.blender.org/index.php?title=Extensions:2.6/Py/Scripts/Nodes/Generic_Note
 
